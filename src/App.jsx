@@ -1,17 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MainProvider from "./context/MainProvider";
+import Navigation from "./components/Navigation/Navigation";
+import HomePage from "./pages/HomePage/HomePage";
+import LoginPage from "./pages/LoginPage/LoginPage";
+import CartPage from "./pages/Cart/CartPage";
+import FavoritesPage from "./pages/Favorites/FavoritesPage";
 
-function App() {
-  const [count, setCount] = useState(0)
 
+export default function App() {
   return (
-    <>
-     <h1>Vite + React</h1>
-    </>
-  )
+    <MainProvider>
+      <BrowserRouter>
+        <Navigation />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/favorites" element={<FavoritesPage />} />
+        </Routes>
+      </BrowserRouter>
+    </MainProvider>
+  );
 }
-
-export default App
