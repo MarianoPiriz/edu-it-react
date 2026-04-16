@@ -11,10 +11,18 @@ export const AuthProvider = ({ children }) => {
   const register = (newUser) => {
     const userDB = JSON.parse(localStorage.getItem("userDB")) || [];
     const existingUser = userDB.find((user) => user.username === newUser.username);
+    const userWithProfile = {
+      ...newUser,
+      profile: {
+        personal: {},
+        security: {},
+        payment: {}
+      }
+    };
     if (existingUser) {
       return { success: false, message: "Username already exists" };
     }
-    userDB.push(newUser);
+    userDB.push(userWithProfile);
     localStorage.setItem("userDB", JSON.stringify(userDB));
     return { success: true, message: "Registration successful, please login" }; 
   }
@@ -28,11 +36,77 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("user");
   };
 
+  const updateUserProfile = (newData) => {
+    const userDB = JSON.parse(localStorage.getItem("userDB")) || [];
+    const userIndex = userDB.findIndex((u) => u.username === user.username);
+    if (userIndex !== -1) {
+      const updatedUser = { ...userDB[userIndex], profile: { ...userDB[userIndex].profile, ...newData } };
+      userDB[userIndex] = updatedUser;
+      localStorage.setItem("userDB", JSON.stringify(userDB));
+      setUser(updatedUser);
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      return { success: true, message: "Profile updated successfully" };
+    } else {
+      return { success: false, message: "User not found" };
+    }
+  };
+
+  const updateAccountPassword = (newPassword) => {
+
+    const userDB = JSON.parse(localStorage.getItem("userDB")) || [];
+
+    const userIndex = userDB.findIndex((u) => u.username === user.username);
+
+    if (userIndex !== -1) {
+      userDB[userIndex].password = newPassword;
+      localStorage.setItem("userDB", JSON.stringify(userDB));
+
+      const updatedUser = { ...user, password: newPassword };
+      setUser(updatedUser);
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+
+      return { success: true, message: "Password updated successfully" };
+    } else {
+      return { success: false, message: "User not found" };
+    }
+  }
+
+  const updatePaymentInfo = (newPaymentMethod) => {
+    const userDB = JSON.parse(localStorage.getItem("userDB")) || [];
+    const userIndex = userDB.findIndex((u) => u.username === user.username);
+    if(userIndex !== -1) {
+      userDB[userIndex].paymentMethod = newPaymentMethod;
+      localStorage.setItem("userDB", JSON.stringify(userDB));
+      const updatedUser = { ...user, paymentMethod: newPaymentMethod };
+      setUser(updatedUser);
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      return { success: true, message: "Payment method updated successfully" };
+    } else {
+      return { success: false, message: "User not found" };
+    } 
+    }
+
+  const addBillingAddress = (newAddress) => {
+    const userDB = JSON.parse(localStorage.getItem("userDB")) || [];
+    const userIndex = userDB.findIndex((u) => u.username === user.username);
+    if(userIndex !== -1) {
+      userDB[userIndex].billingAddress = newAddress;
+      localStorage.setItem("userDB", JSON.stringify(userDB));
+      const updatedUser = { ...user, billingAddress: newAddress };
+      setUser(updatedUser);
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      return { success: true, message: "Billing address added successfully" };
+    } else {
+      return { success: false, message: "User not found" };
+    }
+  }   
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, register }}>
+    <AuthContext.Provider value={{ user, login, logout, register, updateUserProfile , updateAccountPassword, updatePaymentInfo, addBillingAddress}}>
       {children}
     </AuthContext.Provider>
   );
 };
+
 
 export const useAuth = () => useContext(AuthContext);

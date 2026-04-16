@@ -1,20 +1,18 @@
-import { AuthProvider } from "./AuthContext";
-import { WishlistProvider } from "./WhishListContext";
-import { CartProvider } from "./CartContext";   
-
+import { AuthProvider } from './AuthContext';
+import { FavoritesProvider } from './FavoritesContext';
+import { CartProvider } from './CartContext';
+import { ToastProvider } from './ToastContext';
 
 const MainProvider = ({ children }) => {
   return (
-    <AuthProvider>
-      <WishlistProvider>
-        <CartProvider>
-          {children}
-        </CartProvider>
-      </WishlistProvider>
-    </AuthProvider>
+    <ToastProvider>
+      <AuthProvider>
+        <FavoritesProvider>
+          <CartProvider>{children}</CartProvider>
+        </FavoritesProvider>
+      </AuthProvider>
+    </ToastProvider>
   );
 };
 
 export default MainProvider;
-
-
