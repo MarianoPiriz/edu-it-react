@@ -202,6 +202,7 @@ const CartPage = () => {
                     amount: total,
                     shipping: shippingCost.toFixed(2),
                     isBuyNow: false,
+                    products: cart,
                   },
                 })
               }
