@@ -7,3 +7,14 @@ export const calculateCartTotals = (cart, shippingPercentage = 0.10) => {
 
   return { subtotal, shippingCost, total };
 };
+
+export const slugify = (text) => {
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '_')     // Reemplaza espacios por guiones
+    .replace(/[^\w-]+/g, '')  // Elimina caracteres no permitidos
+    .replace(/--+/g, '_');    // Evita guiones dobles
+};
+
