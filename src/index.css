@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Clase para ocultar el scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE y Edge */
+    scrollbar-width: none;  /* Firefox */
+}
  :root {
   box-sizing: border-box;
   margin: 0;

@@ -193,7 +193,22 @@ const CartPage = () => {
               </div>
             </div>
 
+<<<<<<< Updated upstream
             <button className="bg-blue-600 text-white py-2 px-3 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer flex-1">
+=======
+            <button
+              onClick={() =>
+                navigate('/checkout', {
+                  state: {
+                    amount: total,
+                    shipping: shippingCost.toFixed(2),
+                    isBuyNow: false,
+                  },
+                })
+              }
+              className="bg-blue-600 text-white py-2 px-3 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer flex-1"
+            >
+>>>>>>> Stashed changes
               Go to checkout
             </button>
           </div>
