@@ -1,12 +1,13 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import MainProvider from "./context/MainProvider";
-import Navigation from "./components/Navigation/Navigation";
-import HomePage from "./pages/HomePage/HomePage";
-import LoginPage from "./pages/LoginPage/LoginPage";
-import CartPage from "./pages/Cart/CartPage";
-import FavoritesPage from "./pages/Favorites/FavoritesPage";
-import ProfilePage from "./pages/ProfilePage/ProfilePage";
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import MainProvider from './context/MainProvider';
+import Navigation from './components/Navigation/Navigation';
+import HomePage from './pages/HomePage/HomePage';
+import LoginPage from './pages/LoginPage/LoginPage';
+import CartPage from './pages/Cart/CartPage';
+import FavoritesPage from './pages/Favorites/FavoritesPage';
+import ProfilePage from './pages/ProfilePage/ProfilePage';
+import ProductPage from './pages/ProdcutPage/ProductPage';
+import CheckoutPage from './pages/CheckoutPage/CheckoutPage';
 
 export default function App() {
   return (
@@ -19,6 +20,8 @@ export default function App() {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/favorites" element={<FavoritesPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/product/:id/:slug" element={<ProductPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
         </Routes>
       </BrowserRouter>
     </MainProvider>

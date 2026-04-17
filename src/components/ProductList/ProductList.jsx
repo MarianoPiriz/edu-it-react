@@ -1,57 +1,29 @@
-import React, { useState, useEffect } from "react";
-import ProductCard from "../ProductCard/ProductCard";
-import SearchBar from "../SearchBar/SearchBar";
-import Filter from "../Filter/Filter";
+import React, { useState } from 'react';
+import ProductCard from '../ProductCard/ProductCard';
+import SearchBar from '../SearchBar/SearchBar';
+import Filter from '../Filter/Filter';
+import { useProducts } from '../../context/ProductContext';
 
 function ProductList() {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [category, setCategory] = useState("all categories");
+  const { products, loading, error } = useProducts();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [category, setCategory] = useState('all categories');
   const [filter, setFilter] = useState({
-    filterType: "price",
-    filterOrder: "asc",
+    filterType: 'price',
+    filterOrder: 'asc',
   });
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch(
-          "https://api.escuelajs.co/api/v1/products",
-        );
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-
-        console.log(data);
-
-        setProducts(data);
-        setLoading(false);
-      } catch (error) {
-        setError(error);
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
-
   const categoryList = [
-    "all categories",
+    'all categories',
     ...new Set(products.map((product) => product.category?.name)),
   ].filter(Boolean);
-
-  console.log("Available categories:", categoryList);
 
   const filteredProducts = products.filter((product) => {
     const matchesSearchTerm = product.title
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
     const categoryFilteredProducts =
-      category === "all categories"
+      category === 'all categories'
         ? true
         : product.category.name.toLowerCase() === category.toLowerCase();
     return categoryFilteredProducts && matchesSearchTerm;
@@ -60,24 +32,24 @@ function ProductList() {
   const sortedProducts = [...filteredProducts].sort((a, b) => {
     const { filterType, filterOrder } = filter;
 
-   const getValue = (item) => {
-      if (filterType === "price") return item.price;
-      if (filterType === "category") return item.category?.name || "";
-      return item[filterType] || ""; 
+    const getValue = (item) => {
+      if (filterType === 'price') return item.price;
+      if (filterType === 'category') return item.category?.name || '';
+      return item[filterType] || '';
     };
 
     const valA = getValue(a);
     const valB = getValue(b);
 
-    if (filterType === "price") {
-      return filterOrder === "asc" ? valA - valB : valB - valA;
+    if (filterType === 'price') {
+      return filterOrder === 'asc' ? valA - valB : valB - valA;
     }
 
     const strA = valA.toString().toLowerCase();
     const strB = valB.toString().toLowerCase();
 
-    return filterOrder === "asc" 
-      ? strA.localeCompare(strB) 
+    return filterOrder === 'asc'
+      ? strA.localeCompare(strB)
       : strB.localeCompare(strA);
   });
 
