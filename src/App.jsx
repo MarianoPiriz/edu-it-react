@@ -12,7 +12,7 @@ import CheckoutPage from './pages/CheckoutPage/CheckoutPage';
 export default function App() {
   return (
     <MainProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/edu-it-react/">
         <Navigation />
         <Routes>
           <Route path="/" element={<HomePage />} />
