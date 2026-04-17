@@ -4,13 +4,14 @@ import { useCart } from '../../context/CartContext';
 import { FALLBACK_IMAGE, calculateCartTotals } from '../../utils/utils';
 import { FaTrash } from 'react-icons/fa';
 import { useToast } from '../../context/ToastContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const CartPage = () => {
   const { user } = useAuth();
   const { cart, removeFromCart, updateQuantity } = useCart();
   const { subtotal, shippingCost, total } = calculateCartTotals(cart);
   const { showToast } = useToast();
+  const navigate = useNavigate();
 
   const addressFinder =
     user?.billingAddress?.find((addr) => addr.type === 'Shipping') ||
@@ -76,6 +77,7 @@ const CartPage = () => {
                 <h3 className="text-lg font-bold text-gray-800 line-clamp-1 text-left">
                   {product.title}
                 </h3>
+
                 <p className="text-sm text-left">{product.description}</p>
                 <hr className="mt-2 py-2" />
                 <div className="w-full flex justify-between">
@@ -193,9 +195,6 @@ const CartPage = () => {
               </div>
             </div>
 
-<<<<<<< Updated upstream
-            <button className="bg-blue-600 text-white py-2 px-3 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer flex-1">
-=======
             <button
               onClick={() =>
                 navigate('/checkout', {
@@ -208,7 +207,6 @@ const CartPage = () => {
               }
               className="bg-blue-600 text-white py-2 px-3 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer flex-1"
             >
->>>>>>> Stashed changes
               Go to checkout
             </button>
           </div>
