@@ -4,14 +4,13 @@ import { useCart } from '../../context/CartContext';
 import { FALLBACK_IMAGE, calculateCartTotals } from '../../utils/utils';
 import { FaTrash } from 'react-icons/fa';
 import { useToast } from '../../context/ToastContext';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const CartPage = () => {
   const { user } = useAuth();
   const { cart, removeFromCart, updateQuantity } = useCart();
   const { subtotal, shippingCost, total } = calculateCartTotals(cart);
   const { showToast } = useToast();
-  const navigate = useNavigate();
 
   const addressFinder =
     user?.billingAddress?.find((addr) => addr.type === 'Shipping') ||
@@ -195,12 +194,7 @@ const CartPage = () => {
               </div>
             </div>
 
-            <button
-              onClick={() =>
-                navigate('/checkout', { state: { amount: total } })
-              }
-              className="bg-blue-600 text-white py-2 px-3 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer flex-1"
-            >
+            <button className="bg-blue-600 text-white py-2 px-3 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer flex-1">
               Go to checkout
             </button>
           </div>

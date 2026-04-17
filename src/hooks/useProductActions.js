@@ -37,9 +37,11 @@ export const useProductActions = () => {
   };
   const checkIfFavorite = (productId) => favorites.some((fav) => fav.id === productId);
   
-const buyNow = (product) => {
-  navigate('/checkout', { state: { amount: product.price } });
-};
+  const buyNow = (product) => {
+    navigate('/checkout', { state: { amount: product.price, products: [product],
+      isBuyNow: true,
+      shippingCost: product.price * 0.15} });
+  };
 
   return {
     handleAddToCart,

@@ -21,6 +21,7 @@ import { FALLBACK_IMAGE } from '../../utils/utils';
 const ProductPage = () => {
   const { id } = useParams();
   const { products, loading, error } = useProducts();
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { handleAddToCart, buyNow, handleToggleFavorite, checkIfFavorite } =
     useProductActions();
 
@@ -36,7 +37,6 @@ const ProductPage = () => {
     return <p>Product not found</p>;
   }
   const isFavorite = product ? checkIfFavorite(product.id) : false;
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const images = product?.images || [];
 
   const prevImage = () => {
@@ -142,20 +142,27 @@ const ProductPage = () => {
       </div>
       <hr />
       <div className="w-full text-left p-4">
-        <h2>Shipping, returns, and payments</h2>
-        <h3>Shipping:</h3>
-        <p>
-          International shipment of items may be subject to customs processing
-          and additional charges.
-        </p>
-        <h3>Returns:</h3>
-        <p>Seller does not accept returns. </p>
-        <h3>Payments:</h3>
-        <div className="flex text-gray-800 text-[2rem] gap-2">
-          <FaCcAmex />
-          <FaCcVisa />
-          <FaCcMastercard />
-          <FaCcDiscover />
+        <h2 className="font-bold">Shipping, returns, and payments</h2>
+        <hr />
+        <div className="flex mt-4 gap-4">
+          <h3 className="font-bold text-gray-800">Shipping:</h3>
+          <p className="text-sm">
+            International shipment of items may be subject to customs processing
+            and additional charges.
+          </p>
+        </div>
+        <div className="flex mt-4 gap-4">
+          <h3 className="font-bold text-gray-800 ">Returns:</h3>
+          <p className="text-sm">Seller does not accept returns. </p>
+        </div>
+        <div className="flex mt-4 gap-4">
+          <h3 className="font-bold text-gray-800">Payments:</h3>
+          <div className="flex text-gray-800 text-[2rem] gap-2">
+            <FaCcAmex />
+            <FaCcVisa />
+            <FaCcMastercard />
+            <FaCcDiscover />
+          </div>
         </div>
       </div>
     </div>
